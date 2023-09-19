@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_USER=user
+      - POSTGRES_DB=reservation
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      - PORT=3000
+    ports:
+      - '3001:3000'
+    depends_on:
+      - db
