@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ReservationService } from '../services/reservation.service';
 import { CreateReservationDto } from '../dto/create-reservation.dto';
 import { UpdateReservationDto } from '../dto/update-reservation.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ReservationDto } from '../dto/reservation.dto';
 
 @ApiTags('reservation')
@@ -17,12 +17,14 @@ export class ReservationController {
   }
 
   @Get()
-  findAll() {
+  @ApiOkResponse({type : [ReservationDto]})
+  async findAll(): Promise<ReservationDto[]> {
     return this.reservationService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiCreatedResponse({type : ReservationDto})
+  async findOne(@Param('id') id: string):Promise<ReservationDto> {
     return this.reservationService.findOne(+id);
   }
 
@@ -32,6 +34,7 @@ export class ReservationController {
   }
 
   @Delete(':id')
+  @ApiOkResponse({type : ReservationDto})
   remove(@Param('id') id: string) {
     return this.reservationService.remove(+id);
   }

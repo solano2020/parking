@@ -36,7 +36,7 @@ export class LocationService {
         where: {id, delete_at: null},
       });
     } catch (error) {
-      throw new NotFoundException('Error location with ${id} not found');
+      throw new NotFoundException(`Error location with ${id} not found`);
     }
   }
 
@@ -48,7 +48,7 @@ export class LocationService {
         data : request
       });
     } catch (error) {
-      throw new BadRequestException('Error update location with ${id}');
+      throw new BadRequestException(`Error update location with ${id}`);
     }
   }
 
@@ -60,7 +60,7 @@ export class LocationService {
         data: {delete_at: new Date()}
       })
     } catch (error) {
-      throw new BadRequestException('Error delete location with ${id}')
+      throw new BadRequestException(`Error delete location with ${id}`)
     }
   }
 }

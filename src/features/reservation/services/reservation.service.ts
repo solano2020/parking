@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReservationDto } from '../dto/create-reservation.dto';
 import { UpdateReservationDto } from '../dto/update-reservation.dto';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
@@ -25,19 +25,55 @@ export class ReservationService {
     }
   }
 
-  findAll() {
-    return `This action returns all reservation`;
+  async findAll(): Promise<ReservationDto[]> {
+    try {
+      return await this.prismaService.reservation.findMany({
+        include: {
+          location: false,
+          vehicle: false
+        },
+        where: {delete_at: null}
+      })
+    } catch (error) {
+      throw new BadRequestException('Error finding reservations');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reservation`;
+  async findOne(id: number):Promise<ReservationDto>  {
+    try {
+      return await this.prismaService.reservation.findUniqueOrThrow({
+        include: {
+          location: false,
+          vehicle: false
+        },  
+        where: {id, delete_at:null}
+      });
+    } catch (error) {
+      throw new NotFoundException(`Error reservation with ${id} not found`);
+    }
   }
 
-  update(id: number, updateReservationDto: UpdateReservationDto) {
-    return `This action updates a #${id} reservation`;
+  async update(id: number, request: UpdateReservationDto):Promise<ReservationDto> {
+    await this.findOne(id);
+    try {
+      return await this.prismaService.reservation.update({
+        where: {id},
+        data: request
+      }); 
+    } catch (error) {
+      throw new BadRequestException(`Error update reservation with ${id}`)
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} reservation`;
+  async remove(id: number):Promise<ReservationDto> {
+    await this.findOne(id);
+    try {
+      return await this.prismaService.reservation.update({
+        where: {id},
+        data: {delete_at: new Date()}
+      })
+    } catch (error) {
+      throw new BadRequestException(`Error delete reservation with ${id}`)
+    }
   }
 }

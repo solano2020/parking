@@ -35,7 +35,7 @@ export class VehicleService {
         where: {id, delete_at: null}
       });
     } catch (error) {
-      throw new NotFoundException('Error vehicle with ${id} not found');
+      throw new NotFoundException(`Error vehicle with ${id} not found`);
     }
   }
 
@@ -47,7 +47,7 @@ export class VehicleService {
         data: request
       });
     } catch (error) {
-      throw new BadRequestException('Error update vehicle with ${id}');
+      throw new BadRequestException(`Error update vehicle with ${id}`);
     }
   }
 
@@ -59,7 +59,7 @@ export class VehicleService {
           data: {delete_at: new Date()}
       });
     } catch (error) {
-      throw new BadRequestException('Error delete vehicle with ${id}')
+      throw new BadRequestException(`Error delete vehicle with ${id}`)
     }
   }
 }
