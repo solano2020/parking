@@ -3,11 +3,13 @@ import { CreateVehicleDto } from '../dto/create-vehicle.dto';
 import { UpdateVehicleDto } from '../dto/update-vehicle.dto';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { VehicleDto } from '../dto/vehicle.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class VehicleService {
 
-  constructor(private readonly prismaService: PrismaService){}
+  constructor(private readonly prismaService: PrismaService, private configService: ConfigService){
+  }
 
   async create(request: CreateVehicleDto):Promise<VehicleDto> {
     try{
@@ -20,6 +22,7 @@ export class VehicleService {
   }
 
   async findAll():Promise<VehicleDto[]> {
+    console.log("config.name: "+this.configService.get('config.name'));
     try {
       return await this.prismaService.vehicle.findMany({
         where: {delete_at: null}

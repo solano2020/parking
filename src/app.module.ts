@@ -3,10 +3,19 @@ import { SharedModule } from './shared/shared.module';
 import { LocationModule } from './features/location/location.module';
 import { VehicleModule } from './features/vehicle/vehicle.module';
 import { ReservationModule } from './features/reservation/reservation.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from 'config/configuration';
 
 @Module({
-  imports: [SharedModule, LocationModule, VehicleModule, ReservationModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: './env/development.env',
+      isGlobal: true,
+      ignoreEnvFile: true,
+      load: [configuration],
+    }), SharedModule, LocationModule, VehicleModule, ReservationModule
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
