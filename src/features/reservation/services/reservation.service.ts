@@ -3,11 +3,15 @@ import { CreateReservationDto } from '../dto/create-reservation.dto';
 import { UpdateReservationDto } from '../dto/update-reservation.dto';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { ReservationDto } from '../dto/reservation.dto';
+import { VehicleService } from 'src/features/vehicle/services/vehicle.service';
+import { LocationService } from 'src/features/location/services/location.service';
 
 @Injectable()
 export class ReservationService {
 
-  constructor(private readonly prismaService: PrismaService){}
+  constructor(private readonly prismaService: PrismaService, 
+    private readonly vehicleService: VehicleService,
+    private readonly locationService: LocationService){}
 
   async create(request: CreateReservationDto):Promise<ReservationDto> {
     const { locationId, vehicleId, ...reservationRequest } = request;
@@ -38,6 +42,11 @@ export class ReservationService {
       throw new BadRequestException('Error finding reservations');
     }
   }
+
+  // private async verifyLocationAndVehicle(locationId: number, vehicleId: number){
+  //   this.locationService.findOne(locationId);
+  //   this.vehicleService.findOne(vehicleId);
+  // }
 
   async findOne(id: number):Promise<ReservationDto>  {
     try {
