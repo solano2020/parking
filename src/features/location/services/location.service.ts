@@ -22,9 +22,7 @@ export class LocationService {
 
   async findAll():Promise<LocationDto[]> {
     try{
-      return await this.prismaService.location.findMany({
-        where: {delete_at: null}
-      });
+      return await this.prismaService.location.findMany();
     }catch(error){
       throw new BadRequestException('Error finding locations');
     }
@@ -33,7 +31,7 @@ export class LocationService {
   async findOne(id: number): Promise<LocationDto> {
     try {
       return await this.prismaService.location.findUniqueOrThrow({
-        where: {id, delete_at: null},
+        where: {id},
       });
     } catch (error) {
       throw new NotFoundException(`Error location with ${id} not found`);
@@ -55,9 +53,8 @@ export class LocationService {
   async remove(id: number):Promise<LocationDto> {
     await this.findOne(id)
     try {
-      return await this.prismaService.location.update({
-        where: {id}, 
-        data: {delete_at: new Date()}
+      return await this.prismaService.location.delete({
+        where: {id}
       })
     } catch (error) {
       throw new BadRequestException(`Error delete location with ${id}`)

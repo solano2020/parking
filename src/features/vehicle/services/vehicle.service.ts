@@ -24,9 +24,7 @@ export class VehicleService {
   async findAll():Promise<VehicleDto[]> {
     console.log("config.name: "+this.configService.get<string>('config.name'));
     try {
-      return await this.prismaService.vehicle.findMany({
-        where: {delete_at: null}
-      });
+      return await this.prismaService.vehicle.findMany();
     } catch (error) {
       throw new BadRequestException('Error finding directions')
     }
@@ -35,7 +33,7 @@ export class VehicleService {
   async findOne(id: number): Promise<VehicleDto> {
     try {
       return await this.prismaService.vehicle.findUniqueOrThrow({
-        where: {id, delete_at: null}
+        where: {id}
       });
     } catch (error) {
       throw new NotFoundException(`Error vehicle with ${id} not found`);
@@ -57,9 +55,8 @@ export class VehicleService {
   async remove(id: number):Promise<VehicleDto> {
     await this.findOne(id)
     try {
-      return await this.prismaService.vehicle.update({
-          where: {id},
-          data: {delete_at: new Date()}
+      return await this.prismaService.vehicle.delete({
+          where: {id}
       });
     } catch (error) {
       throw new BadRequestException(`Error delete vehicle with ${id}`)

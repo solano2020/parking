@@ -3,11 +3,15 @@ import { CreateReservationDto } from '../dto/create-reservation.dto';
 import { UpdateReservationDto } from '../dto/update-reservation.dto';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { ReservationDto } from '../dto/reservation.dto';
+import { VehicleService } from 'src/features/vehicle/services/vehicle.service';
+import { LocationService } from 'src/features/location/services/location.service';
 
 @Injectable()
 export class ReservationService {
 
-  constructor(private readonly prismaService: PrismaService){}
+  constructor(private readonly prismaService: PrismaService, 
+    private readonly vehicleService: VehicleService,
+    private readonly locationService: LocationService){}
 
   async create(request: CreateReservationDto):Promise<ReservationDto> {
     const { locationId, vehicleId, ...reservationRequest } = request;
@@ -31,13 +35,17 @@ export class ReservationService {
         include: {
           location: false,
           vehicle: false
-        },
-        where: {delete_at: null}
+        }
       })
     } catch (error) {
       throw new BadRequestException('Error finding reservations');
     }
   }
+
+  // private async verifyLocationAndVehicle(locationId: number, vehicleId: number){
+  //   this.locationService.findOne(locationId);
+  //   this.vehicleService.findOne(vehicleId);
+  // }
 
   async findOne(id: number):Promise<ReservationDto>  {
     try {
@@ -46,7 +54,7 @@ export class ReservationService {
           location: false,
           vehicle: false
         },  
-        where: {id, delete_at:null}
+        where: {id}
       });
     } catch (error) {
       throw new NotFoundException(`Error reservation with ${id} not found`);
@@ -68,9 +76,8 @@ export class ReservationService {
   async remove(id: number):Promise<ReservationDto> {
     await this.findOne(id);
     try {
-      return await this.prismaService.reservation.update({
-        where: {id},
-        data: {delete_at: new Date()}
+      return await this.prismaService.reservation.delete({
+        where: {id}
       })
     } catch (error) {
       throw new BadRequestException(`Error delete reservation with ${id}`)
