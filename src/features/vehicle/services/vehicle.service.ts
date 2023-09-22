@@ -22,7 +22,7 @@ export class VehicleService {
   }
 
   async findAll():Promise<VehicleDto[]> {
-    console.log("config.name: "+this.configService.get('config.name'));
+    console.log("config.name: "+this.configService.get<string>('config.name'));
     try {
       return await this.prismaService.vehicle.findMany({
         where: {delete_at: null}

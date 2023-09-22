@@ -9,9 +9,8 @@ import configuration from 'config/configuration';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: './env/development.env',
+      envFilePath: `./env/${process.env.ENVIRONMENT}.env`,
       isGlobal: true,
-      ignoreEnvFile: true,
       load: [configuration],
     }), SharedModule, LocationModule, VehicleModule, ReservationModule
   ],
