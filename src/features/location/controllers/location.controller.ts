@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LocationService } from '../services/location.service';
-import { CreateLocationDto } from '../dto/create-location.dto';
-import { UpdateLocationDto } from '../dto/update-location.dto';
+import { LocationService } from '@Location/services/location.service';
+import { CreateLocationDto } from '@Location/dto/create-location.dto';
+import { UpdateLocationDto } from '@Location/dto/update-location.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { LocationDto } from '../dto/location.dto';
+import { LocationDto } from '@Location/dto/location.dto';
 
 @ApiTags('location')
 @Controller('location')

@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ReservationService } from '../services/reservation.service';
-import { CreateReservationDto } from '../dto/create-reservation.dto';
-import { UpdateReservationDto } from '../dto/update-reservation.dto';
+import { ReservationService } from '@Reservation/services/reservation.service';
+import { CreateReservationDto } from '@Reservation/dto/create-reservation.dto';
+import { UpdateReservationDto } from '@Reservation/dto/update-reservation.dto';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { ReservationDto } from '../dto/reservation.dto';
+import { ReservationDto } from '@Reservation/dto/reservation.dto';
 
 @ApiTags('reservation')
 @Controller('reservation')

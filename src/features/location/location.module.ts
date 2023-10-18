@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { LocationController } from './controllers/location.controller';
-import { LocationService } from './services/location.service';
+import { LocationController } from '@Location/controllers/location.controller';
+import { LocationService } from '@Location/services/location.service';
 
 @Module({
   controllers: [LocationController],

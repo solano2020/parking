@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["src/*"],
+      "@Prisma/*": ["src/shared/services/prisma/*"],
+      "@Reservation/*": ["src/features/reservation/*"],
+      "@Location/*": ["src/features/location/*"],
+      "@Vehicle/*": ["src/features/vehicle/*"]
+    }
   }
+
 }

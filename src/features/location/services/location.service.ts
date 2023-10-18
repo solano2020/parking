@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateLocationDto } from '../dto/create-location.dto';
-import { UpdateLocationDto } from '../dto/update-location.dto';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import { LocationDto } from '../dto/location.dto';
-import { location } from '@prisma/client';
+import { CreateLocationDto } from '@Location/dto/create-location.dto';
+import { UpdateLocationDto } from '@Location/dto/update-location.dto';
+import { LocationDto } from '@Location/dto/location.dto';
+import { PrismaService } from '@Prisma/prisma.service';
 
 @Injectable()
 export class LocationService {

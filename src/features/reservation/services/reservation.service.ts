@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateReservationDto } from '../dto/create-reservation.dto';
-import { UpdateReservationDto } from '../dto/update-reservation.dto';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import { ReservationDto } from '../dto/reservation.dto';
-import { VehicleService } from 'src/features/vehicle/services/vehicle.service';
-import { LocationService } from 'src/features/location/services/location.service';
+import { CreateReservationDto } from '@Reservation/dto/create-reservation.dto';
+import { UpdateReservationDto } from '@Reservation/dto/update-reservation.dto';
+import { PrismaService } from '@Prisma/prisma.service';
+import { ReservationDto } from '@Reservation/dto/reservation.dto';
+import { VehicleService } from '@Vehicle/services/vehicle.service';
+import { LocationService } from '@Location/services/location.service';
 
 @Injectable()
 export class ReservationService {

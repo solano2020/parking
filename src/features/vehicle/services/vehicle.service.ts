@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateVehicleDto } from '../dto/create-vehicle.dto';
-import { UpdateVehicleDto } from '../dto/update-vehicle.dto';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import { VehicleDto } from '../dto/vehicle.dto';
+import { CreateVehicleDto } from '@Vehicle/dto/create-vehicle.dto';
+import { UpdateVehicleDto } from '@Vehicle/dto/update-vehicle.dto';
+import { PrismaService } from '@Prisma/prisma.service';
+import { VehicleDto } from '@Vehicle/dto/vehicle.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -22,7 +22,6 @@ export class VehicleService {
   }
 
   async findAll():Promise<VehicleDto[]> {
-    console.log("config.name: "+this.configService.get<string>('config.name'));
     try {
       return await this.prismaService.vehicle.findMany();
     } catch (error) {
