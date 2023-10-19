@@ -1,3 +1,4 @@
+import { IsUtcDate } from "@/commons/IsUtcDate";
 import { ApiProperty } from "@nestjs/swagger";
 import { reservation } from "@prisma/client";
 import { Transform } from "class-transformer";
@@ -11,12 +12,12 @@ export class CreateReservationDto implements Partial<reservation>{
     external_key: string;
     
     @ApiProperty()
-    @IsDate()
+    @IsUtcDate()
     @Transform(({value}) => new Date(value))
     start_time: Date;
 
     @ApiProperty()
-    @IsDate()
+    @IsUtcDate()
     @Transform(({value}) => new Date(value))
     end_time: Date;
 
