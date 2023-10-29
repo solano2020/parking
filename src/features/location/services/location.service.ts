@@ -3,6 +3,7 @@ import { CreateLocationDto } from '@Location/dto/create-location.dto';
 import { UpdateLocationDto } from '@Location/dto/update-location.dto';
 import { LocationDto } from '@Location/dto/location.dto';
 import { PrismaService } from '@Prisma/prisma.service';
+import { LocationNotFoundException } from '../exceptions/LocationNotFoundException';
 
 @Injectable()
 export class LocationService {
@@ -33,7 +34,7 @@ export class LocationService {
         where: {id},
       });
     } catch (error) {
-      throw new NotFoundException(`Error location with ${id} not found`);
+      throw new LocationNotFoundException(id);
     }
   }
 

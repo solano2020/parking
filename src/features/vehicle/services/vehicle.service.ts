@@ -4,6 +4,7 @@ import { UpdateVehicleDto } from '@Vehicle/dto/update-vehicle.dto';
 import { PrismaService } from '@Prisma/prisma.service';
 import { VehicleDto } from '@Vehicle/dto/vehicle.dto';
 import { ConfigService } from '@nestjs/config';
+import { VehicleNotFoundException } from '@Vehicle/exceptions/VehicleNotFoundException';
 
 @Injectable()
 export class VehicleService {
@@ -35,7 +36,7 @@ export class VehicleService {
         where: {id}
       });
     } catch (error) {
-      throw new NotFoundException(`Error vehicle with ${id} not found`);
+      throw new VehicleNotFoundException(id);
     }
   }
 

@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { LocationNotFoundFilter } from '@Location/exceptions/filters/LocationNotFoundFilter';
+import { VehicleNotFoundFilter } from '@Vehicle/exceptions/filters/VehicleNotFoundFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,8 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true})
     );
+  app.useGlobalFilters(new LocationNotFoundFilter(), new VehicleNotFoundFilter());
+
   const config = new DocumentBuilder()
   .setTitle('Reservation API')
   .setDescription('Reservation the parking')
